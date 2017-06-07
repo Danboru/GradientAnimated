@@ -4,10 +4,11 @@ import android.graphics.drawable.AnimationDrawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ConstraintLayout constraintLayout;
+    private LinearLayout linearLayoutNya;
     private AnimationDrawable animationDrawable;
 
     @Override
@@ -15,26 +16,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Menyembunyikan Action bar
         getSupportActionBar().hide();
 
-        // init constraintLayout
-        constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+        fadeAnimation();
+    }
 
-        // initializing animation drawable by getting background from constraint layout
-        animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+    /**
+     * Fungsi ini akan menggunakan gradient untuk membuat animasi
+     * untuk durasi lamanya di set dalam file xml (animation_list)
+     * */
+    public void fadeAnimation(){
 
-        // setting enter fade animation duration to 5 seconds
-        animationDrawable.setEnterFadeDuration(5000);
+        // Menginisialisasi Layout yang di gunakan
+        linearLayoutNya = (LinearLayout) findViewById(R.id.linearLayout);
 
-        // setting exit fade animation duration to 2 seconds
-        animationDrawable.setExitFadeDuration(2000);
+        // initializing animation drawable by getting background from linear layout
+        animationDrawable = (AnimationDrawable) linearLayoutNya.getBackground();
+
+        // setting enter fade animation duration to seconds
+        animationDrawable.setEnterFadeDuration(6000);
+
+        // setting exit fade animation duration to seconds
+        animationDrawable.setExitFadeDuration(6000);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if (animationDrawable != null && !animationDrawable.isRunning()) {
-            // start the animation
+            // Start the animation
             animationDrawable.start();
         }
 
@@ -44,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (animationDrawable != null && animationDrawable.isRunning()) {
-            // stop the animation
+            // Stop the animation
             animationDrawable.stop();
         }
     }
